@@ -135,6 +135,21 @@ MonoBehaviour:
   crouchSpeed: 4
   jumpSpeed: 8
   gravity: 20
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+--- !u!114 &36952951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36952949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d3315a21440cb42b6e9c3da6f2cda7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &36952954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FPS Player
       objectReference: {fileID: 0}
+    - target: {fileID: 534669902, guid: 5b53de0f2d697b04784392385d51cf96, type: 3}
+      propertyPath: m_Name
+      value: FPS Camera
+      objectReference: {fileID: 0}
     - target: {fileID: 2929771464126928406, guid: 5b53de0f2d697b04784392385d51cf96,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -394,9 +413,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 534669902, guid: 5b53de0f2d697b04784392385d51cf96, type: 3}
-      propertyPath: m_Name
-      value: FPS Camera
+    - target: {fileID: 2929771464134130166, guid: 5b53de0f2d697b04784392385d51cf96,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ac16e68400b522b45a0e03a0c6c2d3d1, type: 2}
+    - target: {fileID: 2929771464126928432, guid: 5b53de0f2d697b04784392385d51cf96,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.1011793
+      objectReference: {fileID: 0}
+    - target: {fileID: 2929771464126928432, guid: 5b53de0f2d697b04784392385d51cf96,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.027942311
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b53de0f2d697b04784392385d51cf96, type: 3}
