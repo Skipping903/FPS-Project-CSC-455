@@ -140,7 +140,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: f3aa36c2aed114223bc6a264d9f9018c, type: 3}
       propertyPath: m_Name
-      value: FPS Player
+      value: FPS Player Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f3aa36c2aed114223bc6a264d9f9018c, type: 3}
       propertyPath: m_LocalPosition.x
