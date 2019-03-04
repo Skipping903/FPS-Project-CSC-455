@@ -36,6 +36,10 @@ public class FPSController : MonoBehaviour
     private float fireRate = 15f;
     private float nextTimeToFire = 0f;
 
+    [SerializeField]
+    private WeaponManager handsWeapon_Manager;
+    private FPSHandsWeapon current_Hands_Weapon;
+
     void Start()
     {
         this.firstPersonView = this.transform.Find("FPS View").transform;
@@ -51,6 +55,9 @@ public class FPSController : MonoBehaviour
 
         this.weapon_Manager.weapons[0].SetActive(true);
         this.current_Weapon = this.weapon_Manager.weapons[0].GetComponent<FPSWeapon>();
+
+        this.handsWeapon_Manager.weapons[0].SetActive(true);
+        this.current_Hands_Weapon = this.handsWeapon_Manager.weapons[0].GetComponent<FPSHandsWeapon>();
     }
 
     void Update()
@@ -244,10 +251,12 @@ public class FPSController : MonoBehaviour
                 this.playerAnimation.Shoot(true);
             }
             this.current_Weapon.Shoot();
+            this.current_Hands_Weapon.Shoot();
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             this.playerAnimation.ReloadGun();
+            this.current_Hands_Weapon.Reload();
         }
     }
 
@@ -255,6 +264,18 @@ public class FPSController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            if (!this.handsWeapon_Manager.weapons[0].activeInHierarchy)
+            {
+                for (int i = 0; i < this.handsWeapon_Manager.weapons.Length; i++)
+                {
+                    this.handsWeapon_Manager.weapons[i].SetActive(false);
+                }
+
+                this.current_Hands_Weapon = null;
+
+                this.handsWeapon_Manager.weapons[0].SetActive(true);
+                this.current_Hands_Weapon = handsWeapon_Manager.weapons[0].GetComponent<FPSHandsWeapon>();
+            }
 
             if (!this.weapon_Manager.weapons[0].activeInHierarchy)
             {
@@ -272,6 +293,19 @@ public class FPSController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            if (!this.handsWeapon_Manager.weapons[1].activeInHierarchy)
+            {
+                for (int i = 0; i < this.handsWeapon_Manager.weapons.Length; i++)
+                {
+                    this.handsWeapon_Manager.weapons[i].SetActive(false);
+                }
+
+                this.current_Hands_Weapon = null;
+
+                this.handsWeapon_Manager.weapons[1].SetActive(true);
+                this.current_Hands_Weapon = this.handsWeapon_Manager.weapons[1].GetComponent<FPSHandsWeapon>();
+            }
+
             if (!this.weapon_Manager.weapons[1].activeInHierarchy)
             {
                 for (int i = 0; i < this.weapon_Manager.weapons.Length; i++)
@@ -288,6 +322,19 @@ public class FPSController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            if (!this.handsWeapon_Manager.weapons[2].activeInHierarchy)
+            {
+                for (int i = 0; i < this.handsWeapon_Manager.weapons.Length; i++)
+                {
+                    this.handsWeapon_Manager.weapons[i].SetActive(false);
+                }
+
+                this.current_Hands_Weapon = null;
+
+                this.handsWeapon_Manager.weapons[2].SetActive(true);
+                this.current_Hands_Weapon = this.handsWeapon_Manager.weapons[2].GetComponent<FPSHandsWeapon>();
+            }
+
             if (!this.weapon_Manager.weapons[2].activeInHierarchy)
             {
                 for (int i = 0; i < this.weapon_Manager.weapons.Length; i++)
