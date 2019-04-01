@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class FPSController : MonoBehaviour
+public class FPSController : NetworkBehaviour
 {
     private Transform firstPersonView, firstPersonCamera;
     private Vector3 FPSRotation = Vector3.zero;
@@ -40,6 +41,15 @@ public class FPSController : MonoBehaviour
     private WeaponManager handsWeapon_Manager;
     private FPSHandsWeapon current_Hands_Weapon;
 
+    public GameObject playerHolder, weaponsHolder;
+    public GameObject[] weapons_FPS;
+    private Camera mainCam;
+    public FPSMouseLook[] mouseLook;
+
+    private Color[] playerColors = new Color[] {new Color(0, 44, 255, 255),
+        new Color(252, 208, 193, 255), new Color(0, 0, 0, 255)};
+    public Renderer playerRenderer;
+
     void Start()
     {
         this.firstPersonView = this.transform.Find("FPS View").transform;
@@ -58,10 +68,90 @@ public class FPSController : MonoBehaviour
 
         this.handsWeapon_Manager.weapons[0].SetActive(true);
         this.current_Hands_Weapon = this.handsWeapon_Manager.weapons[0].GetComponent<FPSHandsWeapon>();
+
+        if (this.isLocalPlayer)
+        {
+            this.playerHolder.layer = LayerMask.NameToLayer("Player");
+
+            foreach (Transform child in this.playerHolder.transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("Player");
+            }
+
+            for (int i = 0; i < this.weapons_FPS.Length; i++)
+            {
+                this.weapons_FPS[i].layer = LayerMask.NameToLayer("Player");
+            }
+
+            this.weaponsHolder.layer = LayerMask.NameToLayer("Enemy");
+
+            foreach (Transform child in this.weaponsHolder.transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("Enemy");
+            }
+        }
+
+        if (!this.isLocalPlayer)
+        {
+            this.playerHolder.layer = LayerMask.NameToLayer("Enemy");
+
+            foreach (Transform child in this.playerHolder.transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("Enemy");
+            }
+
+            for (int i = 0; i < this.weapons_FPS.Length; i++)
+            {
+                this.weapons_FPS[i].layer = LayerMask.NameToLayer("Enemy");
+            }
+
+            this.weaponsHolder.layer = LayerMask.NameToLayer("Player");
+
+            foreach (Transform child in this.weaponsHolder.transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("Player");
+            }
+        }
+
+        if (!this.isLocalPlayer)
+        {
+            for (int i = 0; i < this.mouseLook.Length; i++)
+            {
+                this.mouseLook[i].enabled = false;
+            }
+        }
+
+        this.mainCam = transform.Find("FPS View").Find("FPS Camera").GetComponent<Camera>();
+        this.mainCam.gameObject.SetActive(false);
+
+        if (!this.isLocalPlayer)
+        {
+            for (int i = 0; i < this.playerRenderer.materials.Length; i++)
+            {
+                this.playerRenderer.materials[i].color = this.playerColors[i];
+            }
+        }
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        this.tag = "Player";
     }
 
     void Update()
     {
+        if (this.isLocalPlayer)
+        {
+            if (!mainCam.gameObject.activeInHierarchy)
+            {
+                mainCam.gameObject.SetActive(true);
+            }
+        }
+        
+        if (!this.isLocalPlayer)
+        {
+            return;
+        }
         this.playerMovement();
         this.SelectWeapon();
     }
